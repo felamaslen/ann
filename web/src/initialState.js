@@ -1,7 +1,10 @@
 import { fromJS } from 'immutable';
 
 export default fromJS({
-    foo: 'foo',
-    loading: false
+    sending: false,
+    sent: false,
+    receivedResult: null,
+    resultToken: null,
+    sendingResponse: false
 });
 

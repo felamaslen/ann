@@ -1,9 +1,12 @@
 import { connect } from 'react-redux';
 
+import { drawingSent } from '../../actions/app.actions';
+
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 const COLOR_DRAW = 'rgb(0, 0, 0)';
+const COLOR_INACTIVE = 'rgb(100, 100, 100)';
 const LINE_WIDTH = 2;
 
 export class Draw extends Component {
@@ -22,6 +25,10 @@ export class Draw extends Component {
         };
     }
     onDrawStart({ posX, posY }) {
+        if (!this.props.active) {
+            return;
+        }
+
         this.drawing = true;
 
         this.setState({
@@ -29,7 +36,7 @@ export class Draw extends Component {
         });
     }
     onDraw({ posX, posY }) {
-        if (!this.drawing) {
+        if (!this.props.active || !this.drawing) {
             return;
         }
 
@@ -44,6 +51,10 @@ export class Draw extends Component {
         });
     }
     onDrawEnd({ posX, posY }) {
+        if (!this.props.active) {
+            return;
+        }
+
         this.onDraw({ posX, posY });
 
         this.drawing = false;
@@ -69,7 +80,13 @@ export class Draw extends Component {
             });
         });
 
-        this.ctx.strokeStyle = COLOR_DRAW;
+        if (this.props.active) {
+            this.ctx.strokeStyle = COLOR_DRAW;
+        }
+        else {
+            this.ctx.strokeStyle = COLOR_INACTIVE;
+        }
+
         this.ctx.lineWidth = LINE_WIDTH;
         this.ctx.stroke();
         this.ctx.closePath();
@@ -77,10 +94,21 @@ export class Draw extends Component {
     clear() {
         this.setState({ lines: [] });
     }
+    send() {
+        const drawingUrl = this.canvas.toDataURL();
+
+        this.props.sendDrawing(drawingUrl);
+    }
     componentDidMount() {
         this.draw();
     }
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
+        if (!prevProps.active && this.props.active) {
+            this.setState({
+                lines: []
+            });
+        }
+
         this.draw();
     }
     getPosXY(evt) {
@@ -119,6 +147,9 @@ export class Draw extends Component {
         const onTouchEnd = onMouseUp;
 
         const onClear = () => this.clear();
+        const onSend = () => this.send();
+
+        const disabled = !this.props.active;
 
         return <div className="draw-outer">
             <div className="draw-canvas-outer">
@@ -135,17 +166,27 @@ export class Draw extends Component {
                 />
             </div>
             <div className="controls">
-                <button className="button button-clear" onClick={onClear}>Clear</button>
+                <button className="button button-clear" onClick={onClear}
+                    disabled={disabled}>Clear</button>
+                <button className="button button-send" onClick={onSend}
+                    disabled={disabled}>Send</button>
             </div>
         </div>;
     }
 }
 
 Draw.propTypes = {
+    active: PropTypes.bool.isRequired,
+    sendDrawing: PropTypes.func.isRequired
 };
 
-const mapStateToProps = null;
-const mapDispatchToProps = null;
+const mapStateToProps = state => ({
+    active: !(state.get('sending') || state.get('sent'))
+});
+
+const mapDispatchToProps = dispatch => ({
+    sendDrawing: data => dispatch(drawingSent(data))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Draw);
 

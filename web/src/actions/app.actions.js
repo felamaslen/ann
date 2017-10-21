@@ -1,6 +1,10 @@
 import buildAction from './buildAction';
-import { ASYNC_REQUESTED, ASYNC_RECEIVED } from '../constants/actions';
+import {
+    DRAWING_SENT, RESULT_RECEIVED, RESPONSE_SENT, RESPONSE_RECEIVED
+} from '../constants/actions';
 
-export const asyncRequested = () => buildAction(ASYNC_REQUESTED);
-export const asyncReceived = response => buildAction(ASYNC_RECEIVED, response);
+export const drawingSent = data => buildAction(DRAWING_SENT, data);
+export const resultReceived = response => buildAction(RESULT_RECEIVED, response);
+export const responseSent = status => buildAction(RESPONSE_SENT, status);
+export const responseReceived = () => buildAction(RESPONSE_RECEIVED);
 
