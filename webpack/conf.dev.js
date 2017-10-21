@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
 
 const webpackConfig = require('./conf.common');
 const moduleConfigDev = require('./module.dev');
@@ -19,7 +20,8 @@ module.exports = {
                 NODE_ENV: JSON.stringify('development')
             }
         }),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new Dotenv({ path: '.env' })
     ],
     module: moduleConfigDev,
     devServer: {
@@ -34,7 +36,6 @@ module.exports = {
         noInfo: false,
         publicPath: '/',
         port: process.env.PORT_WDS,
-        historyApiFallback: true,
         proxy: {
             '/': {
                 target: `http://localhost:${process.env.PORT}`,
