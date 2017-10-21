@@ -6,6 +6,8 @@ import store from './store';
 
 import Root from './containers/Root';
 
+import './sass/index.scss';
+
 function renderApp(RootComponent = Root) {
     render(
         <AppContainer>
