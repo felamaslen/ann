@@ -1,0 +1,16 @@
+.draw-outer {
+    display: flex;
+    flex: 0 0 auto;
+    margin: 1em;
+    padding: 1em;
+    border: 1px solid #ccc;
+
+    .draw-canvas-outer {
+        width: $draw-width;
+        height: $draw-height;
+        border: 1px solid #ccc;
+    }
+
+    .draw-canvas {
+    }
+}

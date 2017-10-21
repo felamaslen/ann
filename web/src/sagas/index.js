@@ -2,13 +2,18 @@ import { fork, takeEvery } from 'redux-saga/effects';
 
 import * as actions from '../constants/actions';
 
-import { doAsyncTestCall } from './app.saga';
+import { sendDrawing, sendResponse } from './app.saga';
 
-function *watchAsyncTest() {
-    yield takeEvery(actions.ASYNC_REQUESTED, doAsyncTestCall);
+function *watchDrawingSent() {
+    yield takeEvery(actions.DRAWING_SENT, sendDrawing);
+}
+
+function *watchResponseSent() {
+    yield takeEvery(actions.RESPONSE_SENT, sendResponse);
 }
 
 export default function *rootSaga() {
-    yield fork(watchAsyncTest);
+    yield fork(watchDrawingSent);
+    yield fork(watchResponseSent);
 }
 

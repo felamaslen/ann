@@ -7,8 +7,10 @@ import * as actions from '../constants/actions';
 import * as app from './app.reducer';
 
 const reducers = [
-    [actions.ASYNC_REQUESTED, app.requestAsync],
-    [actions.ASYNC_RECEIVED, app.handleAsyncResponse]
+    [actions.DRAWING_SENT, app.sendDrawing],
+    [actions.RESULT_RECEIVED, app.handleResult],
+    [actions.RESPONSE_SENT, app.sendResultResponse],
+    [actions.RESPONSE_RECEIVED, app.handleResponseResult]
 ];
 
 export default createReducer(initialState, reducers.reduce((reducerObject, reducer) => {
