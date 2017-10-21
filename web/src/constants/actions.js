@@ -1,0 +1,3 @@
+export const ASYNC_REQUESTED = 'ASYNC_REQUESTED';
+export const ASYNC_RECEIVED = 'ASYNC_RECEIVED';
+
