@@ -74,6 +74,9 @@ export class Draw extends Component {
         this.ctx.stroke();
         this.ctx.closePath();
     }
+    clear() {
+        this.setState({ lines: [] });
+    }
     componentDidMount() {
         this.draw();
     }
@@ -115,6 +118,8 @@ export class Draw extends Component {
         const onTouchMove = onMouseMove;
         const onTouchEnd = onMouseUp;
 
+        const onClear = () => this.clear();
+
         return <div className="draw-outer">
             <div className="draw-canvas-outer">
                 <canvas
@@ -128,6 +133,9 @@ export class Draw extends Component {
                     onTouchMove={onTouchMove}
                     onTouchEnd={onTouchEnd}
                 />
+            </div>
+            <div className="controls">
+                <button className="button button-clear" onClick={onClear}>Clear</button>
             </div>
         </div>;
     }
