@@ -5,7 +5,12 @@
     height: $draw-height;
     border: 1px solid #ccc;
 
-    .draw-canvas {
+    .draw-canvas-outer {
+        width: $draw-width - 2px;
+        height: $draw-height - 2px;
         border: 1px solid #ccc;
+    }
+
+    .draw-canvas {
     }
 }
