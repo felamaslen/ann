@@ -1,5 +1,5 @@
 const dotenv = require('dotenv');
-if (process.env.NODE_ENV === 'development') {
+if (process.env.LOAD_DOTENV || process.env.NODE_ENV === 'development') {
     dotenv.config();
 }
 
