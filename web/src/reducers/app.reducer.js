@@ -1,3 +1,5 @@
+import { RESPONSE_VALUES } from '../constants/values';
+
 export const sendDrawing = state => state
     .set('sending', true);
 
@@ -7,15 +9,17 @@ const resetState = state => state
     .set('receivedResult', null)
     .set('resultToken', null);
 
-export function handleResult(state, result = null) {
+export function handleResult(state, data = null) {
     const sentState = state.set('sending', false);
 
-    if (!result) {
+    if (!data) {
         return sentState;
     }
 
     try {
-        const { character, token } = result;
+        const { result, token } = data;
+
+        const character = RESPONSE_VALUES[result];
 
         return sentState
             .set('sent', true)

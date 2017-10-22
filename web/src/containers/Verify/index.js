@@ -17,8 +17,8 @@ export class Verify extends Component {
 
         const onResultCorrect = () => this.props.send(this.props.receivedResult);
 
-        const correctionButtons = RESPONSE_VALUES.map(value => {
-            const onClick = () => this.props.send(value);
+        const correctionButtons = RESPONSE_VALUES.map((value, key) => {
+            const onClick = () => this.props.send(key);
 
             return <button key={value} onClick={onClick} disabled={disabled}>{value}</button>;
         });

@@ -69,3 +69,6 @@ cli/env
 
 web/build
 
+biases.npy
+weights.npy
+

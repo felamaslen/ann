@@ -4,9 +4,9 @@ import { put, select } from 'redux-saga/effects';
 
 import { resultReceived, responseReceived } from '../actions/app.actions';
 
-export function *sendDrawing(data) {
+export function *sendDrawing({ payload }) {
     try {
-        const response = yield axios.post('/drawing', data);
+        const response = yield axios.post('/drawing', { data: payload });
 
         yield put(resultReceived(response.data));
     }

@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 const COLOR_DRAW = 'rgb(0, 0, 0)';
 const COLOR_INACTIVE = 'rgb(100, 100, 100)';
 const LINE_WIDTH = 2;
+const WIDTH = 30;
+const HEIGHT = 30;
 
 export class Draw extends Component {
     constructor(props) {
@@ -15,8 +17,11 @@ export class Draw extends Component {
 
         this.canvas = null;
         this.ctx = null;
-        this.width = 0;
-        this.height = 0;
+        this.width = WIDTH;
+        this.height = HEIGHT;
+
+        this.widthRatio = 1;
+        this.heightRatio = 1;
 
         this.drawing = false;
 
@@ -117,8 +122,8 @@ export class Draw extends Component {
         }
 
         return {
-            posX: evt.clientX - this.canvas.offsetLeft,
-            posY: evt.clientY - this.canvas.offsetTop
+            posX: this.widthRatio * (evt.clientX - this.canvas.offsetLeft),
+            posY: this.heightRatio * (evt.clientY - this.canvas.offsetTop)
         };
     }
     render() {
@@ -129,11 +134,11 @@ export class Draw extends Component {
 
             this.canvas = canvas;
 
-            this.canvas.width = canvas.parentNode.offsetWidth - 2;
-            this.canvas.height = canvas.parentNode.offsetHeight - 2;
+            this.canvas.width = this.width;
+            this.canvas.height = this.height;
 
-            this.width = this.canvas.width;
-            this.height = this.canvas.height;
+            this.widthRatio = this.width / this.canvas.parentNode.offsetWidth;
+            this.heightRatio = this.height / this.canvas.parentNode.offsetHeight;
 
             this.ctx = canvas.getContext('2d');
         };
