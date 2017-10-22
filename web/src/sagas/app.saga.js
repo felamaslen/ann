@@ -6,7 +6,7 @@ import { resultReceived, responseReceived } from '../actions/app.actions';
 
 export function *sendDrawing({ payload }) {
     try {
-        const response = yield axios.post('/drawing', { data: payload });
+        const response = yield axios.post('drawing', { data: payload });
 
         yield put(resultReceived(response.data));
     }
@@ -25,7 +25,7 @@ export function *sendResponse({ payload }) {
 
         const corrected = payload;
 
-        yield axios.post('/correct', { token, corrected, result });
+        yield axios.post('correct', { token, corrected, result });
 
         yield put(responseReceived());
     }
