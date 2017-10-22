@@ -15,8 +15,8 @@ WEIGHTS_FILE = 'weights.npy'
 IMG_WIDTH = 30
 IMG_HEIGHT = 30
 
-BRAIN_SIZE = [IMG_WIDTH * IMG_HEIGHT, 10, 26 * 2 + 10]
-LEARN_RATE = 10.0
+BRAIN_SIZE = [IMG_WIDTH * IMG_HEIGHT, 100, 30, 10]
+LEARN_RATE = 0.2
 
 def sigmoid(z):
     return 1.0 / (1.0 + np.exp(-z))
@@ -81,14 +81,14 @@ def backpropagate(biases, weights, input_value, expected_value):
     return layered_biases, layered_weights
 
 
-def get_new_weights_biases(biases, weights, input_value, expected_value, learn_rate=LEARN_RATE):
+def get_new_weights_biases(biases, weights, input_value, expected_value):
     """ Train the neural network """
     delta_biases, delta_weights = backpropagate(biases, weights, input_value, expected_value)
 
-    new_weights = [w - learn_rate * nw
+    new_weights = [w - LEARN_RATE * nw
             for w, nw in zip(weights, delta_weights)]
 
-    new_biases = [b - learn_rate * nb
+    new_biases = [b - LEARN_RATE * nb
             for b, nb in zip(biases, delta_biases)]
 
     return new_biases, new_weights

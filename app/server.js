@@ -61,8 +61,6 @@ function processFile(file, correctValue = null) {
             command += ` ${correctValue}`;
         }
 
-        console.log({ command });
-
         const child = exec(command);
 
         child.stdout.on('data', data => {
